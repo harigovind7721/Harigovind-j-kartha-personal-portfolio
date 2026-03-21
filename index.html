@@ -166,13 +166,13 @@
 
         <div class="cert-container">
             <!-- Certifications -->
-            <div class="cert-box" onclick="openCertModal('javascript-cert.jpg')">
+            <div class="cert-box" onclick="openCertModal('javascript-cert.pdf')">
                 <div class="cert-icon"><i class='bx bx-certification'></i></div>
                 <h3>JavaScript Certification</h3>
                 <p>Spoken Tutorial Project, IIT Bombay - 2025</p>
                 <div style="margin-top: 1.5rem; color: var(--main-color); font-size: 1.3rem; font-weight: 500;"><i class='bx bx-zoom-in'></i> Click to View Certificate</div>
             </div>
-            <div class="cert-box" onclick="openCertModal('aws-cert.jpg')">
+            <div class="cert-box" onclick="openCertModal('aws-cert.pdf')">
                 <div class="cert-icon"><i class='bx bxl-aws'></i></div>
                 <h3>AWS Cloud Fundamentals</h3>
                 <p>ICT Academy of Kerala - 2025</p>
@@ -228,7 +228,7 @@
     <!-- Certificate Modal -->
     <div id="certModal" class="cert-modal" onclick="closeCertModal()">
         <span class="close-modal">&times;</span>
-        <img class="cert-modal-content" id="certImage" onclick="event.stopPropagation()">
+        <iframe class="cert-modal-content" id="certImage" src="" onclick="event.stopPropagation()"></iframe>
     </div>
 
     <!-- Typed.js for typing animation -->
