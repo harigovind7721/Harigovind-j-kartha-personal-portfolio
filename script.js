@@ -76,3 +76,23 @@ if (contactForm && hiddenIframe) {
         submitted = true;
     });
 }
+
+/* Certificate Modal Logic */
+const certModal = document.getElementById('certModal');
+const certImage = document.getElementById('certImage');
+
+window.openCertModal = function(imageSrc) {
+    if (certModal && certImage) {
+        certImage.src = imageSrc;
+        certModal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+}
+
+window.closeCertModal = function() {
+    if (certModal) {
+        certModal.classList.remove('show');
+        document.body.style.overflow = 'auto'; // Re-enable scroll
+        setTimeout(() => { certImage.src = ''; }, 300); // Clear image after animation
+    }
+}
