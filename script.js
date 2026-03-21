@@ -58,9 +58,21 @@ const typed = new Typed('.multiple-text', {
     loop: true
 });
 
-/* Contact Form Submission Form Default Prevent */
-document.querySelector('#contact-form .submit-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    alert('Thank you for your message! This is a demo form, so no message was actually sent. You can connect backend services like Formspree or EmailJS later to make it functional.');
-    document.querySelector('#contact-form').reset();
-});
+/* Google Form Submission Handling */
+let submitted = false;
+let contactForm = document.querySelector('#contact-form');
+let hiddenIframe = document.querySelector('#hidden_iframe');
+
+if (contactForm && hiddenIframe) {
+    hiddenIframe.addEventListener('load', function() {
+        if (submitted) {
+            alert('Thank you! Your message has been sent successfully.');
+            contactForm.reset();
+            submitted = false;
+        }
+    });
+
+    contactForm.addEventListener('submit', function() {
+        submitted = true;
+    });
+}
