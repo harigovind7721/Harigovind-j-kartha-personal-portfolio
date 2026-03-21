@@ -211,6 +211,18 @@ span.multiple-text {
     box-shadow: none;
 }
 
+.btn.light {
+    background: transparent;
+    color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.btn.light:hover {
+    background: var(--main-color);
+    color: var(--second-bg-color);
+    box-shadow: var(--accent-glow);
+}
+
 .home-img {
     position: relative;
     width: 35vw;
