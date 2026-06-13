@@ -51,7 +51,7 @@ ScrollReveal().reveal('.experience-timeline, .cert-container, .activities-grid',
 
 /* Typed.js for Auto Typing */
 const typed = new Typed('.multiple-text', {
-    strings: ['BCA Honours Student', 'Data Analytics Enthusiast', 'AI Explorer', 'Web Design Intern'],
+    strings: ['BCA Honours Student', 'AI Enthusiast', 'Data Analyst', 'Web Designer'],
     typeSpeed: 100,
     backSpeed: 100,
     backDelay: 1000,
