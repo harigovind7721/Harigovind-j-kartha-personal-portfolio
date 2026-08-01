@@ -1,6 +1,6 @@
 # Personal Portfolio — Harigovind J Kartha
 
-My personal portfolio website, live at: https://harigovind-j-kartha-personal-portfo.vercel.app
+My personal portfolio website, live at: https://harigovindjkartha.me/
 
 Built as part of my web designing internship at **Tisser Technologies** (May 2025).
 
