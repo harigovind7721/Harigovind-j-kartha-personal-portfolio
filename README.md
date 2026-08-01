@@ -20,4 +20,4 @@ Built as part of my web designing internship at **Tisser Technologies** (May 202
 
 ## Deployment
 
-Hosted on Vercel. Auto-deploys from the main branch.
+ Auto-deploys from the main branch.
