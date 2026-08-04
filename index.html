@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Harigovind J Kartha - Portfolio</title>
+    <title>Harigovind J Kartha | Data Analytics & Frontend Developer</title>
+    <meta name="description" content="BCA student at Kristu Jyoti College of Management and Technology, specialising in AI/ML and Data Analytics. Interned at MashupStack and Tisser Technologies.">
+    <meta name="author" content="Harigovind J Kartha">
+    <meta name="keywords" content="Harigovind J Kartha, data analytics, frontend developer, BCA Kerala, Kristu Jyoti College, MashupStack intern, AI ML student">
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,6 +20,32 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <!-- JSON-LD Person Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Harigovind J Kartha",
+      "url": "https://harigovindjkartha.me",
+      "sameAs": [
+        "https://github.com/harigovind7721",
+        "https://www.linkedin.com/in/harigovind-j-kartha",
+        "https://app.mulearn.org/dashboard/profile"
+      ],
+      "jobTitle": "Aspiring Data Analytics",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Kristu Jyoti College of Management and Technology"
+      },
+      "knowsAbout": [
+        "Data Analytics",
+        "Python",
+        "React",
+        "Machine Learning",
+        "Frontend Development"
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- Header / Navbar -->
@@ -60,6 +89,9 @@
           <a href="mailto:hnhari777@gmail.com"
             ><i class="bx bx-envelope"></i
           ></a>
+          <a href="https://app.mulearn.org/dashboard/profile" target="_blank" title="MuLearn">
+            <i style="font-style: normal; font-weight: 700; font-family: 'Outfit', sans-serif; font-size: 1.2em;">µ</i>
+          </a>
         </div>
 
         <div
@@ -114,25 +146,28 @@
           <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-date">2024 - 2028</div>
-            <div class="timeline-content">
+            <div class="timeline-content" onclick="toggleEduDesc(this)" style="cursor: pointer; transition: 0.3s;">
               <h3>BCA Honours (5th Semester)</h3>
-              <p>Mahatma Gandhi University (FYUGP)</p>
+              <p>Kristu Jyoti College of Management and Technology</p>
+              <p class="edu-desc" style="display: none; margin-top: 10px; font-size: 0.95rem; opacity: 0.9;">Established in 2002 and managed by the CMI congregation, KJCMT is a prominent NAAC 'A' Grade institution affiliated with Mahatma Gandhi University, emphasizing academic excellence and innovation.</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-date">2024</div>
-            <div class="timeline-content">
+            <div class="timeline-content" onclick="toggleEduDesc(this)" style="cursor: pointer; transition: 0.3s;">
               <h3>Higher Secondary (Plus Two)</h3>
-              <p>Directorate of Higher Secondary Education</p>
+              <p>Crossroads Higher Secondary School Pampady</p>
+              <p class="edu-desc" style="display: none; margin-top: 10px; font-size: 0.95rem; opacity: 0.9;">Founded in 1984 by the Kerala Christ Church Mission, it provides a balanced education integrating academic excellence with traditional values and holistic development.</p>
             </div>
           </div>
           <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-date">2022</div>
-            <div class="timeline-content">
+            <div class="timeline-content" onclick="toggleEduDesc(this)" style="cursor: pointer; transition: 0.3s;">
               <h3>SSLC</h3>
-              <p>Central Board of Secondary Education</p>
+              <p>Crossroads Central School Pampady</p>
+              <p class="edu-desc" style="display: none; margin-top: 10px; font-size: 0.95rem; opacity: 0.9;">Established in 2006 and affiliated with CBSE, the school focuses on a caring, disciplined environment that integrates academic rigor with moral and value-based learning.</p>
             </div>
           </div>
         </div>

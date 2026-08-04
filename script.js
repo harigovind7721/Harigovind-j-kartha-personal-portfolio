@@ -96,3 +96,15 @@ window.closeCertModal = function() {
         setTimeout(() => { certImage.src = ''; }, 300); // Clear image after animation
     }
 }
+
+/* Education Description Toggle Logic */
+window.toggleEduDesc = function(element) {
+    const desc = element.querySelector('.edu-desc');
+    if (desc) {
+        if (desc.style.display === 'none') {
+            desc.style.display = 'block';
+        } else {
+            desc.style.display = 'none';
+        }
+    }
+}
