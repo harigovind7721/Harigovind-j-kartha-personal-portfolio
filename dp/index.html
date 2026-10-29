@@ -100,6 +100,8 @@
     .btn-copy.copied{background:var(--green);border-color:var(--green);color:#0d160e}
     .btn-download{background:linear-gradient(135deg,var(--accent),#5b52d0);color:#fff}
     .btn-download:hover{opacity:.88;transform:translateY(-1px)}
+    .btn-colab{background:linear-gradient(135deg,#f39c12,#d35400);color:#fff}
+    .btn-colab:hover{opacity:.9;transform:translateY(-1px);color:#fff}
     .file-info{font-size:.75rem;color:var(--text-dim);display:flex;align-items:center;gap:6px}
     .full-section{border-color:var(--accent2)}
     /* Responsive */
@@ -136,6 +138,7 @@
     <div class="toc-title">Table of Contents</div>
     <ul class="toc-list">
       <li><a href="#prog-full" id="toc-full"><span class="toc-num" style="color:var(--accent2)">★</span>digi_4_separate_files.zip</a></li>
+      <li><a href="https://colab.research.google.com/drive/1y1l0ZW1dSomURpR7ua82RdYiO66fxsO8" target="_blank" rel="noopener noreferrer" style="color:var(--orange)"><span class="toc-num" style="color:var(--orange)">↗</span>Google Colab Notebook</a></li>
       <hr class="toc-divider" />
       <li><a href="#prog-1" id="toc-1"><span class="toc-num">01</span>1. Load a grayscale and color image an...</a></li>
       <li><a href="#prog-2" id="toc-2"><span class="toc-num">02</span>2. Simulate image sampling and quantiz...</a></li>
@@ -176,6 +179,7 @@
         <span class="chip">scikit-image</span>
         <span class="chip">Python 3</span>
         <a href="digi_4_separate_files.zip" download="digi_4_separate_files.zip" class="chip" style="background:linear-gradient(135deg,var(--accent),#5b52d0);color:#fff;text-decoration:none;font-weight:600">📦 Download digi_4_separate_files.zip</a>
+        <a href="https://colab.research.google.com/drive/1y1l0ZW1dSomURpR7ua82RdYiO66fxsO8" target="_blank" rel="noopener noreferrer" class="chip" style="background:linear-gradient(135deg,#f39c12,#d35400);color:#fff;text-decoration:none;font-weight:600">🚀 Open in Colab</a>
       </div>
     </div>
     <div id="programs-container"></div>
@@ -3621,7 +3625,10 @@ function renderFull(fullCode){
         </div>
         <div class="file-info"><span>📦</span><span>digi_4_separate_files.zip (25 scripts + setup.bat + requirements.txt)</span></div>
         <div class="btn-group">
-          <a class="btn btn-download" href="digi_4_separate_files.zip" download="digi_4_separate_files.zip" style="text-decoration:none;">⬇ Download digi_4_separate_files.zip</a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn btn-download" href="digi_4_separate_files.zip" download="digi_4_separate_files.zip" style="flex:1;min-width:160px;text-decoration:none;">⬇ Download digi_4_separate_files.zip</a>
+            <a class="btn btn-colab" href="https://colab.research.google.com/drive/1y1l0ZW1dSomURpR7ua82RdYiO66fxsO8" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:160px;text-decoration:none;">🚀 Open in Google Colab</a>
+          </div>
           <button class="btn btn-copy" id="cb-full" onclick="copyCode(this,FULL)">⎘ Copy Combined Code</button>
           <button class="btn btn-copy" onclick="dlFile('digi_lab.py',FULL)">⬇ Download digi_lab.py</button>
         </div>
