@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Image Processing Lab — Programs 1–25 | harigovindjkartha.me</title>
+  <meta name="description" content="All 25 Digital Image Processing lab programs in Python with syntax highlighting, copy, and download. Topics: color models, histograms, spatial filters, Fourier transforms, morphology, noise." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖼️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0d0f17;--bg3:#1b1f30;--surface:#1e2235;--surface2:#252a3f;
+      --border:#2e3450;--accent:#7c6af7;--accent2:#56d4c8;
+      --text:#e2e6f3;--text-muted:#7a82a8;--text-dim:#4a5070;
+      --green:#5fdf9a;--yellow:#f5d76e;--orange:#f0955a;--blue:#6ab0f5;--pink:#d67cf5;
+      --toc-width:280px;--radius:12px;--radius-sm:8px;--shadow:0 4px 24px #00000040;
+    }
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.65;min-height:100vh}
+    ::-webkit-scrollbar{width:7px;height:7px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+    /* Header */
+    .site-header{position:sticky;top:0;z-index:100;background:#0d0f17cc;backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;gap:12px}
+    .site-header .logo{font-size:1.5rem}
+    .site-header h1{font-size:1.05rem;font-weight:600;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+    .header-badge{margin-left:auto;background:var(--surface2);border:1px solid var(--border);
+      color:var(--text-muted);font-size:.75rem;padding:3px 10px;border-radius:99px;white-space:nowrap}
+    .toc-toggle{display:none;background:var(--surface2);border:1px solid var(--border);color:var(--text);
+      padding:6px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:1.1rem;line-height:1}
+    /* Layout */
+    .layout{display:flex;min-height:calc(100vh - 60px)}
+    /* TOC */
+    .toc-sidebar{width:var(--toc-width);flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);
+      overflow-y:auto;background:var(--bg3);border-right:1px solid var(--border);padding:20px 0 40px}
+    .toc-title{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--text-dim);padding:0 20px 10px}
+    .toc-list{list-style:none}
+    .toc-list li a{display:flex;align-items:center;gap:8px;padding:6px 20px;font-size:.79rem;
+      color:var(--text-muted);text-decoration:none;border-left:3px solid transparent;transition:all .18s;line-height:1.4}
+    .toc-list li a:hover,.toc-list li a.active{color:var(--text);background:var(--surface);border-left-color:var(--accent)}
+    .toc-num{min-width:22px;font-size:.7rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace}
+    .toc-divider{margin:10px 20px;border:none;border-top:1px solid var(--border)}
+    /* Main */
+    .main-content{flex:1;min-width:0;padding:32px 28px 60px}
+    /* Intro */
+    .intro-banner{background:linear-gradient(135deg,#1c1f35 0%,#1a2040 100%);border:1px solid var(--border);
+      border-radius:var(--radius);padding:28px 32px;margin-bottom:40px;position:relative;overflow:hidden}
+    .intro-banner::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;
+      background:radial-gradient(circle,#7c6af730 0%,transparent 70%)}
+    .intro-banner h2{font-size:1.5rem;font-weight:700;margin-bottom:8px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .intro-banner p{color:var(--text-muted);font-size:.9rem;max-width:600px}
+    .intro-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .chip{background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);
+      font-size:.75rem;padding:4px 12px;border-radius:99px}
+    /* Section */
+    .program-section{margin-bottom:48px;border:1px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;background:var(--surface);box-shadow:var(--shadow);scroll-margin-top:76px}
+    .section-header{background:var(--surface2);border-bottom:1px solid var(--border);
+      padding:14px 20px;display:flex;align-items:center;gap:12px}
+    .section-num{background:linear-gradient(135deg,var(--accent),#5b52d0);color:#fff;
+      font-size:.72rem;font-weight:700;font-family:'JetBrains Mono',monospace;
+      padding:3px 9px;border-radius:6px;white-space:nowrap}
+    .section-title{font-size:.95rem;font-weight:600;color:var(--text);flex:1}
+    .section-body{display:grid;grid-template-columns:1fr 340px;min-height:0}
+    /* Code */
+    .code-panel{border-right:1px solid var(--border);overflow:hidden}
+    .code-scroll{overflow-x:auto;overflow-y:auto;max-height:480px}
+    .code-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono','Fira Code',monospace;font-size:.78rem;line-height:1.7}
+    .code-table tr:hover{background:#ffffff08}
+    .ln{user-select:none;text-align:right;padding:0 12px 0 14px;color:var(--text-dim);
+      border-right:1px solid var(--border);min-width:42px;white-space:nowrap;vertical-align:top}
+    .lc{padding:0 16px 0 12px;white-space:pre;color:var(--text)}
+    /* Syntax highlight */
+    .kw{color:#d67cf5;font-weight:500}.bi{color:#6ab0f5}.st{color:#5fdf9a}
+    .cm{color:#4a5070;font-style:italic}.nu{color:#f0955a}.fn{color:#56d4c8}
+    .op{color:#f5d76e}.dc{color:#7c6af7;font-style:italic}
+    /* Info panel */
+    .info-panel{padding:24px;display:flex;flex-direction:column;gap:20px}
+    .question-box{background:#0d0f1780;border:1px solid var(--border);
+      border-left:3px solid var(--accent2);border-radius:var(--radius-sm);padding:14px 16px}
+    .question-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--accent2);margin-bottom:6px}
+    .question-text{font-size:.88rem;color:var(--text);line-height:1.6}
+    .btn-group{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 18px;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;
+      cursor:pointer;border:none;transition:all .18s;font-family:'Inter',sans-serif;text-decoration:none}
+    .btn-copy{background:var(--surface2);border:1px solid var(--border);color:var(--text)}
+    .btn-copy:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn-copy.copied{background:var(--green);border-color:var(--green);color:#0d160e}
+    .btn-download{background:linear-gradient(135deg,var(--accent),#5b52d0);color:#fff}
+    .btn-download:hover{opacity:.88;transform:translateY(-1px)}
+    .file-info{font-size:.75rem;color:var(--text-dim);display:flex;align-items:center;gap:6px}
+    .full-section{border-color:var(--accent2)}
+    /* Responsive */
+    @media(max-width:900px){
+      .section-body{grid-template-columns:1fr}
+      .code-panel{border-right:none;border-bottom:1px solid var(--border)}
+      .code-scroll{max-height:340px}
+      .info-panel{padding:18px}
+    }
+    @media(max-width:720px){
+      :root{--toc-width:100%}
+      .toc-sidebar{display:none;position:fixed;top:60px;left:0;right:0;bottom:0;z-index:50;width:100%;height:auto}
+      .toc-sidebar.open{display:block}
+      .toc-toggle{display:block}
+      .main-content{padding:16px 12px 40px}
+      .site-header{padding:0 14px}
+      .intro-banner{padding:20px}
+      .intro-banner h2{font-size:1.2rem}
+    }
+
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="logo" aria-hidden="true">🖼️</span>
+  <h1>Digital Image Processing Lab</h1>
+  <span class="header-badge">Programs 1 – 25</span>
+  <button class="toc-toggle" id="tocToggle" aria-label="Toggle table of contents" onclick="toggleToc()">☰</button>
+</header>
+
+<div class="layout">
+  <nav class="toc-sidebar" id="tocSidebar" aria-label="Table of contents">
+    <div class="toc-title">Table of Contents</div>
+    <ul class="toc-list">
+      <li><a href="#prog-1" id="toc-1"><span class="toc-num">01</span>1. Load a grayscale and color image an...</a></li>
+      <li><a href="#prog-2" id="toc-2"><span class="toc-num">02</span>2. Simulate image sampling and quantiz...</a></li>
+      <li><a href="#prog-3" id="toc-3"><span class="toc-num">03</span>3. Demonstrate spatial and intensity r...</a></li>
+      <li><a href="#prog-4" id="toc-4"><span class="toc-num">04</span>4. Compute and visualize adjacency and...</a></li>
+      <li><a href="#prog-5" id="toc-5"><span class="toc-num">05</span>5. Read an image and separate it into...</a></li>
+      <li><a href="#prog-6" id="toc-6"><span class="toc-num">06</span>6. Modify hue, saturation, and intensi...</a></li>
+      <li><a href="#prog-7" id="toc-7"><span class="toc-num">07</span>7. Plot color histograms for each chan...</a></li>
+      <li><a href="#prog-8" id="toc-8"><span class="toc-num">08</span>8. Image negative transformation....</a></li>
+      <li><a href="#prog-9" id="toc-9"><span class="toc-num">09</span>9. Apply log transformation and analyz...</a></li>
+      <li><a href="#prog-10" id="toc-10"><span class="toc-num">10</span>10. Power-law (gamma) transformation f...</a></li>
+      <li><a href="#prog-11" id="toc-11"><span class="toc-num">11</span>11. Perform piecewise linear transform...</a></li>
+      <li><a href="#prog-12" id="toc-12"><span class="toc-num">12</span>12. Perform histogram equalization and...</a></li>
+      <li><a href="#prog-13" id="toc-13"><span class="toc-num">13</span>13. Implement histogram stretching....</a></li>
+      <li><a href="#prog-14" id="toc-14"><span class="toc-num">14</span>14. Apply histogram matching (specific...</a></li>
+      <li><a href="#prog-15" id="toc-15"><span class="toc-num">15</span>15. Perform spatial correlation and co...</a></li>
+      <li><a href="#prog-16" id="toc-16"><span class="toc-num">16</span>16. Apply smoothing filters (mean, Gau...</a></li>
+      <li><a href="#prog-17" id="toc-17"><span class="toc-num">17</span>17. Sharpening filters using Laplacian...</a></li>
+      <li><a href="#prog-18" id="toc-18"><span class="toc-num">18</span>18. Perform unsharp masking and high-b...</a></li>
+      <li><a href="#prog-19" id="toc-19"><span class="toc-num">19</span>19. Apply gradient operators (Sobel, P...</a></li>
+      <li><a href="#prog-20" id="toc-20"><span class="toc-num">20</span>20. Compute and visualize the 2D Fouri...</a></li>
+      <li><a href="#prog-21" id="toc-21"><span class="toc-num">21</span>21. Apply low-pass and high-pass filte...</a></li>
+      <li><a href="#prog-22" id="toc-22"><span class="toc-num">22</span>22. Demonstrate properties of DFT (tra...</a></li>
+      <li><a href="#prog-23" id="toc-23"><span class="toc-num">23</span>23. Perform basic morphological operat...</a></li>
+      <li><a href="#prog-24" id="toc-24"><span class="toc-num">24</span>24. Hit-or-miss transformation for pat...</a></li>
+      <li><a href="#prog-25" id="toc-25"><span class="toc-num">25</span>25. Add different types of noise: Gaus...</a></li>
+      <hr class="toc-divider" />
+      <li><a href="#prog-full" id="toc-full"><span class="toc-num" style="color:var(--accent2)">★</span>Full file (digi_lab.py)</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content" id="mainContent">
+    <div class="intro-banner">
+      <h2>Digital Image Processing Lab</h2>
+      <p>25 Python programs covering foundational DIP concepts — from color models and histograms to morphology and Fourier analysis.</p>
+      <div class="intro-chips">
+        <span class="chip">OpenCV</span>
+        <span class="chip">NumPy</span>
+        <span class="chip">Matplotlib</span>
+        <span class="chip">scikit-image</span>
+        <span class="chip">Python 3</span>
+      </div>
+    </div>
+    <div id="programs-container"></div>
+  </main>
+</div>
+
+<script>
+const PROGS = [
+  {id:1,fn:"program_01.py",q:`1. Load a grayscale and color image and display. Convert a color image to grayscale.`,code:`import cv2
+import matplotlib.pyplot as plt
+
+color_img = cv2.imread("sample.jpeg")
+
+if color_img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    color_rgb = cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB)
+    converted_gray = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(color_rgb)
+    plt.title("Color Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(converted_gray, cmap="gray")
+    plt.title("Grayscale Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(converted_gray, cmap="gray")
+    plt.title("Converted Grayscale")
+    plt.axis("off")
+
+    plt.show()`},
+  {id:2,fn:"program_02.py",q:`2. Simulate image sampling and quantization by reducing resolution and gray levels.`,code:`import numpy as np
+
+img = cv2.imread("sample.jpeg", cv2.IMREAD_GRAYSCALE)
+
+if img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    sampled_img = cv2.resize(img, (100, 100))
+    quantized_img = (img // 16) * 16
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(img, cmap="gray")
+    plt.title("Original Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(sampled_img, cmap="gray")
+    plt.title("Sampled Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(quantized_img, cmap="gray")
+    plt.title("Quantized Image")
+    plt.axis("off")
+
+    plt.show()`},
+  {id:3,fn:"program_03.py",q:`3. Demonstrate spatial and intensity resolution differences using image resizing and quantization.`,code:`img = cv2.imread("sample.jpeg", cv2.IMREAD_GRAYSCALE)
+
+if img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    spatial_img = cv2.resize(img, (100, 100))
+    intensity_img = (img // 16) * 16
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(img, cmap="gray")
+    plt.title("Original Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(spatial_img, cmap="gray")
+    plt.title("Low Spatial Resolution")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(intensity_img, cmap="gray")
+    plt.title("Low Intensity Resolution")
+    plt.axis("off")
+
+    plt.show()`},
+  {id:4,fn:"program_04.py",q:`4. Compute and visualize adjacency and connectivity in a binary image.`,code:`img = np.array([
+    [0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0],
+    [0, 1, 1, 1, 0],
+    [0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0]
+])
+
+plt.imshow(img, cmap="gray")
+plt.title("Binary Image")
+plt.show()
+
+row = 2
+col = 2
+
+print("Selected Pixel:", img[row, col])
+
+print("\\n4-Adjacency:")
+print("Top:", img[row - 1, col])
+print("Bottom:", img[row + 1, col])
+print("Left:", img[row, col - 1])
+print("Right:", img[row, col + 1])
+
+print("\\n8-Adjacency:")
+for i in range(row - 1, row + 2):
+    for j in range(col - 1, col + 2):
+        if (i, j) != (row, col):
+            print(f"Neighbor ({i},{j}) =", img[i, j])`},
+  {id:5,fn:"program_05.py",q:`5. Read an image and separate it into RGB components. Convert RGB image to CMY and HSI color models.`,code:`img = cv2.imread("sample.jpg")
+
+rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+R = rgb[:, :, 0]
+G = rgb[:, :, 1]
+B = rgb[:, :, 2]
+
+# RGB to CMY
+C = 255 - R
+M = 255 - G
+Y = 255 - B
+
+# RGB to HSI (HSV used in OpenCV)
+hsi = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+H = hsi[:, :, 0]
+S = hsi[:, :, 1]
+I = hsi[:, :, 2]
+
+plt.figure(figsize=(12, 10))
+
+plt.subplot(3, 3, 1)
+plt.imshow(rgb)
+plt.title("Original RGB")
+plt.axis("off")
+
+plt.subplot(3, 3, 2)
+plt.imshow(R, cmap="gray")
+plt.title("Red")
+plt.axis("off")
+
+plt.subplot(3, 3, 3)
+plt.imshow(G, cmap="gray")
+plt.title("Green")
+plt.axis("off")
+
+plt.subplot(3, 3, 4)
+plt.imshow(B, cmap="gray")
+plt.title("Blue")
+plt.axis("off")
+
+plt.subplot(3, 3, 5)
+plt.imshow(C, cmap="gray")
+plt.title("Cyan")
+plt.axis("off")
+
+plt.subplot(3, 3, 6)
+plt.imshow(M, cmap="gray")
+plt.title("Magenta")
+plt.axis("off")
+
+plt.subplot(3, 3, 7)
+plt.imshow(Y, cmap="gray")
+plt.title("Yellow")
+plt.axis("off")
+
+plt.subplot(3, 3, 8)
+plt.imshow(H, cmap="gray")
+plt.title("Hue")
+plt.axis("off")
+
+plt.subplot(3, 3, 9)
+plt.imshow(S, cmap="gray")
+plt.title("Saturation")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:6,fn:"program_06.py",q:`6. Modify hue, saturation, and intensity and display the output.`,code:`img = cv2.imread("sample1.jpeg")
+
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+hsv[:, :, 0] = (hsv[:, :, 0] + 20) % 180                 # Hue
+hsv[:, :, 1] = np.clip(hsv[:, :, 1] + 50, 0, 255)        # Saturation
+hsv[:, :, 2] = np.clip(hsv[:, :, 2] + 40, 0, 255)        # Intensity (Value)
+
+output = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+output_rgb = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(output_rgb)
+plt.title("Modified HSV Image")
+plt.axis("off")
+
+plt.show()`},
+  {id:7,fn:"program_07.py",q:`7. Plot color histograms for each channel.`,code:`img = cv2.imread("sample1.jpeg")
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+colors = ('r', 'g', 'b')
+for i, color in enumerate(colors):
+    hist = cv2.calcHist([img_rgb], [i], None, [256], [0, 256])
+    plt.plot(hist, color=color)
+
+plt.title("RGB Color Histogram")
+plt.xlabel("Pixel Intensity (0-255)")
+plt.ylabel("Number of Pixels")
+
+plt.tight_layout()
+plt.show()`},
+  {id:8,fn:"program_08.py",q:`8. Image negative transformation.`,code:`img = cv2.imread("sample2.jpeg")
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+negative = 255 - img_rgb
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(negative)
+plt.title("Negative Image")
+plt.axis("off")
+
+plt.show()`},
+  {id:9,fn:"program_09.py",q:`9. Apply log transformation and analyze contrast enhancement.`,code:`img = cv2.imread("sample2.jpeg", 0)
+
+img_float = img.astype(np.float32)
+
+c = 255 / np.log(1 + np.max(img_float))
+log_img = c * np.log(1 + img_float)
+log_img = np.uint8(log_img)
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(log_img, cmap='gray')
+plt.title("Log Transformed Image")
+plt.axis("off")
+
+plt.show()`},
+  {id:10,fn:"program_10.py",q:`10. Power-law (gamma) transformation for different gamma values. Formula: s = c * r^gamma   (r normalized to [0, 1], c = 1)`,code:`img = cv2.imread("sample.jpeg")
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+img_norm = img / 255.0
+
+gamma_values = [0.5, 1.0, 2.0]
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 4, 1)
+plt.imshow(img)
+plt.title("Original")
+plt.axis("off")
+
+for i, gamma in enumerate(gamma_values):
+    gamma_img = np.power(img_norm, gamma)     # Output = Input ^ gamma
+    gamma_img = np.uint8(gamma_img * 255)     # Back to 0-255
+
+    plt.subplot(1, 4, i + 2)
+    plt.imshow(gamma_img)
+    plt.title(f"Gamma = {gamma}")
+    plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:11,fn:"program_11.py",q:`11. Perform piecewise linear transformations (contrast stretching, thresholding).`,code:`img = cv2.imread("sample.jpeg", 0)
+
+# Contrast stretching
+contrast = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)
+
+# Thresholding
+threshold_value = 128
+_, threshold = cv2.threshold(img, threshold_value, 255, cv2.THRESH_BINARY)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(contrast, cmap='gray')
+plt.title("Contrast Stretching")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(threshold, cmap='gray')
+plt.title("Thresholding")
+plt.axis("off")
+
+plt.show()`},
+  {id:12,fn:"program_12.py",q:`12. Perform histogram equalization and compare results.`,code:`image = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+
+equalized = cv2.equalizeHist(image)
+
+plt.figure(figsize=(10, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 2)
+plt.imshow(equalized, cmap="gray")
+plt.title("Equalized Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 3)
+plt.hist(image.ravel(), 256, [0, 256])
+plt.title("Original Histogram")
+
+plt.subplot(2, 2, 4)
+plt.hist(equalized.ravel(), 256, [0, 256])
+plt.title("Equalized Histogram")
+
+plt.tight_layout()
+plt.show()`},
+  {id:13,fn:"program_13.py",q:`13. Implement histogram stretching.`,code:`image = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+
+min_val = image.min()
+max_val = image.max()
+stretched = ((image - min_val) / (max_val - min_val) * 255).astype("uint8")
+
+plt.figure(figsize=(10, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 2)
+plt.imshow(stretched, cmap="gray")
+plt.title("Stretched Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 3)
+plt.hist(image.ravel(), 256, [0, 256])
+plt.title("Original Histogram")
+
+plt.subplot(2, 2, 4)
+plt.hist(stretched.ravel(), 256, [0, 256])
+plt.title("Stretched Histogram")
+
+plt.tight_layout()
+plt.show()`},
+  {id:14,fn:"program_14.py",q:`14. Apply histogram matching (specification) with a reference image.`,code:`from skimage.exposure import match_histograms
+
+source = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+reference = cv2.imread("image1.jpg", cv2.IMREAD_GRAYSCALE)
+
+matched = match_histograms(source, reference)
+matched = matched.astype("uint8")
+
+plt.figure(figsize=(12, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(source, cmap="gray")
+plt.title("Source Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(reference, cmap="gray")
+plt.title("Reference Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(matched, cmap="gray")
+plt.title("Matched Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.hist(source.ravel(), 256, [0, 256])
+plt.title("Source Histogram")
+
+plt.subplot(2, 3, 5)
+plt.hist(reference.ravel(), 256, [0, 256])
+plt.title("Reference Histogram")
+
+plt.subplot(2, 3, 6)
+plt.hist(matched.ravel(), 256, [0, 256])
+plt.title("Matched Histogram")
+
+plt.tight_layout()
+plt.show()`},
+  {id:15,fn:"program_15.py",q:`15. Perform spatial correlation and convolution using custom kernels.`,code:`image = cv2.imread("image.jpeg", 0)
+
+kernel = np.array([
+    [1, 2, 1],
+    [0, 0, 0],
+    [-1, -2, -1]
+], dtype=np.float32)
+
+# Spatial correlation
+correlation = cv2.filter2D(image, -1, kernel)
+
+# Spatial convolution (kernel flipped 180 degrees)
+flipped_kernel = cv2.flip(kernel, -1)
+convolution = cv2.filter2D(image, -1, flipped_kernel)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(correlation, cmap="gray")
+plt.title("Spatial Correlation")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(convolution, cmap="gray")
+plt.title("Spatial Convolution")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:16,fn:"program_16.py",q:`16. Apply smoothing filters (mean, Gaussian).`,code:`image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+mean_filtered = cv2.blur(image_rgb, (5, 5))
+gaussian_filtered = cv2.GaussianBlur(image_rgb, (5, 5), 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(mean_filtered)
+plt.title("Mean Filter")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(gaussian_filtered)
+plt.title("Gaussian Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:17,fn:"program_17.py",q:`17. Sharpening filters using Laplacian.`,code:`image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+laplacian = cv2.Laplacian(gray, cv2.CV_64F)
+laplacian = cv2.convertScaleAbs(laplacian)
+
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(gray, cmap="gray")
+plt.title("Grayscale Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(laplacian, cmap="gray")
+plt.title("Laplacian Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:18,fn:"program_18.py",q:`18. Perform unsharp masking and high-boost filtering.`,code:`image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Unsharp masking
+blur = cv2.GaussianBlur(image_rgb, (5, 5), 0)
+unsharp = cv2.addWeighted(image_rgb, 1.5, blur, -0.5, 0)
+
+# High-boost filtering
+A = 2.0  # Boost factor (A > 1)
+high_boost = cv2.addWeighted(image_rgb, A, blur, -(A - 1), 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(unsharp)
+plt.title("Unsharp Masking")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(high_boost)
+plt.title("High-Boost Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:19,fn:"program_19.py",q:`19. Apply gradient operators (Sobel, Prewitt) for edge detection.`,code:`image = cv2.imread("sample.jpeg")
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Sobel
+sobel_x = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
+sobel_y = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=3)
+sobel = cv2.magnitude(sobel_x, sobel_y)
+sobel = cv2.convertScaleAbs(sobel)
+
+# Prewitt
+kernel_x = np.array([[-1, 0, 1],
+                     [-1, 0, 1],
+                     [-1, 0, 1]])
+
+kernel_y = np.array([[-1, -1, -1],
+                     [ 0,  0,  0],
+                     [ 1,  1,  1]])
+
+prewitt_x = cv2.filter2D(gray, -1, kernel_x)
+prewitt_y = cv2.filter2D(gray, -1, kernel_y)
+prewitt = cv2.addWeighted(prewitt_x, 0.5, prewitt_y, 0.5, 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(gray, cmap='gray')
+plt.title("Original")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(sobel, cmap='gray')
+plt.title("Sobel")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(prewitt, cmap='gray')
+plt.title("Prewitt")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:20,fn:"program_20.py",q:`20. Compute and visualize the 2D Fourier Transform of an image. Implement inverse DFT and reconstruct the image.`,code:`image = cv2.imread("sample.jpeg", 0)
+
+dft = cv2.dft(np.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
+dft_shift = np.fft.fftshift(dft)
+
+magnitude = cv2.magnitude(dft_shift[:, :, 0], dft_shift[:, :, 1])
+magnitude_spectrum = 20 * np.log(magnitude + 1)
+
+# Inverse DFT
+dft_ishift = np.fft.ifftshift(dft_shift)
+reconstructed = cv2.idft(dft_ishift)
+reconstructed = cv2.magnitude(reconstructed[:, :, 0], reconstructed[:, :, 1])
+reconstructed = cv2.normalize(reconstructed, None, 0, 255, cv2.NORM_MINMAX)
+reconstructed = np.uint8(reconstructed)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(magnitude_spectrum, cmap="gray")
+plt.title("Fourier Spectrum")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(reconstructed, cmap="gray")
+plt.title("Reconstructed Image")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:21,fn:"program_21.py",q:`21. Apply low-pass and high-pass filters in frequency domain.`,code:`img = cv2.imread("sample.jpg", 0)
+
+f = np.fft.fft2(img)
+fshift = np.fft.fftshift(f)
+
+rows, cols = img.shape
+crow, ccol = rows // 2, cols // 2
+
+mask_low = np.zeros((rows, cols), np.uint8)
+mask_high = np.ones((rows, cols), np.uint8)
+
+r = 30  # Radius
+
+Y, X = np.ogrid[:rows, :cols]
+distance = (X - ccol) ** 2 + (Y - crow) ** 2
+
+mask_low[distance <= r ** 2] = 1
+mask_high[distance <= r ** 2] = 0
+
+low_pass = fshift * mask_low
+high_pass = fshift * mask_high
+
+low_img = np.abs(np.fft.ifft2(np.fft.ifftshift(low_pass)))
+high_img = np.abs(np.fft.ifft2(np.fft.ifftshift(high_pass)))
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(low_img, cmap='gray')
+plt.title("Low-Pass Filter")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(high_img, cmap='gray')
+plt.title("High-Pass Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:22,fn:"program_22.py",q:`22. Demonstrate properties of DFT (translation, scaling).`,code:`img = cv2.imread("sample.jpg", 0)
+rows, cols = img.shape
+
+# Translation
+M = np.float32([[1, 0, 50],
+                [0, 1, 30]])
+translated = cv2.warpAffine(img, M, (cols, rows))
+
+# Scaling
+scaled = cv2.resize(img, None, fx=1.5, fy=1.5)
+
+
+def magnitude_spectrum_log(image):
+    dft = np.fft.fft2(image)
+    dft_shift = np.fft.fftshift(dft)
+    return np.log(np.abs(dft_shift) + 1)
+
+
+original_spectrum = magnitude_spectrum_log(img)
+translated_spectrum = magnitude_spectrum_log(translated)
+scaled_spectrum = magnitude_spectrum_log(scaled)
+
+plt.figure(figsize=(15, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(translated, cmap='gray')
+plt.title("Translated Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(scaled, cmap='gray')
+plt.title("Scaled Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.imshow(original_spectrum, cmap='gray')
+plt.title("Original DFT")
+plt.axis("off")
+
+plt.subplot(2, 3, 5)
+plt.imshow(translated_spectrum, cmap='gray')
+plt.title("Translated DFT")
+plt.axis("off")
+
+plt.subplot(2, 3, 6)
+plt.imshow(scaled_spectrum, cmap='gray')
+plt.title("Scaled DFT")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:23,fn:"program_23.py",q:`23. Perform basic morphological operations: dilation and erosion. Use different structuring elements and analyze effects. Opening and closing.`,code:`img = cv2.imread("sample.jpeg", 0)
+
+_, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+
+rect = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+ellipse = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+cross = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
+
+dilation = cv2.dilate(binary, rect, iterations=1)
+erosion = cv2.erode(binary, rect, iterations=1)
+opening = cv2.morphologyEx(binary, cv2.MORPH_OPEN, ellipse)
+closing = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, cross)
+
+plt.figure(figsize=(15, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(binary, cmap='gray')
+plt.title("Original Binary")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(dilation, cmap='gray')
+plt.title("Dilation")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(erosion, cmap='gray')
+plt.title("Erosion")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.imshow(opening, cmap='gray')
+plt.title("Opening")
+plt.axis("off")
+
+plt.subplot(2, 3, 5)
+plt.imshow(closing, cmap='gray')
+plt.title("Closing")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:24,fn:"program_24.py",q:`24. Hit-or-miss transformation for pattern detection.`,code:`img = cv2.imread("sample.jpeg", 0)
+
+_, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+binary = binary // 255
+
+kernel = np.array([[0, 1, 0],
+                   [1, 1, 1],
+                   [0, 1, 0]], dtype=np.int8)
+
+hitmiss = cv2.morphologyEx(binary.astype(np.uint8), cv2.MORPH_HITMISS, kernel)
+
+binary = binary * 255
+hitmiss = hitmiss * 255
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(binary, cmap='gray')
+plt.title("Binary Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(hitmiss, cmap='gray')
+plt.title("Hit-or-Miss Output")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()`},
+  {id:25,fn:"program_25.py",q:`25. Add different types of noise: Gaussian, Salt & Pepper (Impulse), Rayleigh / Gamma / Exponential. Apply mean filters and analyze results.`,code:`img = cv2.imread("sample.jpeg", 0)
+img_float = img.astype(np.float32) / 255.0
+
+# Gaussian noise
+gaussian = img_float + np.random.normal(0, 0.1, img_float.shape)
+gaussian = np.clip(gaussian, 0, 1)
+
+# Salt & pepper noise
+sp = img_float.copy()
+salt_prob = 0.02
+pepper_prob = 0.02
+salt = np.random.rand(*img.shape) < salt_prob
+pepper = np.random.rand(*img.shape) < pepper_prob
+sp[salt] = 1
+sp[pepper] = 0
+
+# Rayleigh noise
+rayleigh = img_float + np.random.rayleigh(0.1, img.shape)
+rayleigh = np.clip(rayleigh, 0, 1)
+
+# Gamma noise
+gamma = img_float + np.random.gamma(2, 0.05, img.shape)
+gamma = np.clip(gamma, 0, 1)
+
+# Exponential noise
+expo = img_float + np.random.exponential(0.05, img.shape)
+expo = np.clip(expo, 0, 1)
+
+
+def mean_filter(image):
+    image = np.uint8(image * 255)
+    return cv2.blur(image, (3, 3))
+
+
+gaussian_f = mean_filter(gaussian)
+sp_f = mean_filter(sp)
+rayleigh_f = mean_filter(rayleigh)
+gamma_f = mean_filter(gamma)
+expo_f = mean_filter(expo)
+
+titles = [
+    "Original",
+    "Gaussian", "Gaussian + Mean",
+    "Salt & Pepper", "S&P + Mean",
+    "Rayleigh", "Rayleigh + Mean",
+    "Gamma", "Gamma + Mean",
+    "Exponential", "Exponential + Mean"
+]
+
+images = [
+    img,
+    np.uint8(gaussian * 255), gaussian_f,
+    np.uint8(sp * 255), sp_f,
+    np.uint8(rayleigh * 255), rayleigh_f,
+    np.uint8(gamma * 255), gamma_f,
+    np.uint8(expo * 255), expo_f
+]
+
+plt.figure(figsize=(15, 12))
+
+for i in range(len(images)):
+    plt.subplot(4, 3, i + 1)
+    plt.imshow(images[i], cmap='gray')
+    plt.title(titles[i])
+    plt.axis("off")
+
+plt.tight_layout()
+plt.show()`}
+];
+
+const FULL = `# -*- coding: utf-8 -*-
+"""
+Digital Image Processing Lab - Programs 1 to 25
+
+Required image files (place them in the same folder as this script):
+    sample.jpeg, sample.jpg, sample1.jpeg, sample2.jpeg,
+    image.jpeg, image1.jpg
+"""
+
+# =============================================================================
+# 1. Load a grayscale and color image and display. Convert a color image to grayscale.
+# =============================================================================
+import cv2
+import matplotlib.pyplot as plt
+
+color_img = cv2.imread("sample.jpeg")
+
+if color_img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    color_rgb = cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB)
+    converted_gray = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(color_rgb)
+    plt.title("Color Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(converted_gray, cmap="gray")
+    plt.title("Grayscale Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(converted_gray, cmap="gray")
+    plt.title("Converted Grayscale")
+    plt.axis("off")
+
+    plt.show()
+
+
+# =============================================================================
+# 2. Simulate image sampling and quantization by reducing resolution and gray levels.
+# =============================================================================
+import numpy as np
+
+img = cv2.imread("sample.jpeg", cv2.IMREAD_GRAYSCALE)
+
+if img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    sampled_img = cv2.resize(img, (100, 100))
+    quantized_img = (img // 16) * 16
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(img, cmap="gray")
+    plt.title("Original Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(sampled_img, cmap="gray")
+    plt.title("Sampled Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(quantized_img, cmap="gray")
+    plt.title("Quantized Image")
+    plt.axis("off")
+
+    plt.show()
+
+
+# =============================================================================
+# 3. Demonstrate spatial and intensity resolution differences using image
+#    resizing and quantization.
+# =============================================================================
+img = cv2.imread("sample.jpeg", cv2.IMREAD_GRAYSCALE)
+
+if img is None:
+    print("Error: Could not load sample.jpeg")
+else:
+    spatial_img = cv2.resize(img, (100, 100))
+    intensity_img = (img // 16) * 16
+
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 3, 1)
+    plt.imshow(img, cmap="gray")
+    plt.title("Original Image")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 2)
+    plt.imshow(spatial_img, cmap="gray")
+    plt.title("Low Spatial Resolution")
+    plt.axis("off")
+
+    plt.subplot(1, 3, 3)
+    plt.imshow(intensity_img, cmap="gray")
+    plt.title("Low Intensity Resolution")
+    plt.axis("off")
+
+    plt.show()
+
+
+# =============================================================================
+# 4. Compute and visualize adjacency and connectivity in a binary image.
+# =============================================================================
+img = np.array([
+    [0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0],
+    [0, 1, 1, 1, 0],
+    [0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0]
+])
+
+plt.imshow(img, cmap="gray")
+plt.title("Binary Image")
+plt.show()
+
+row = 2
+col = 2
+
+print("Selected Pixel:", img[row, col])
+
+print("\\n4-Adjacency:")
+print("Top:", img[row - 1, col])
+print("Bottom:", img[row + 1, col])
+print("Left:", img[row, col - 1])
+print("Right:", img[row, col + 1])
+
+print("\\n8-Adjacency:")
+for i in range(row - 1, row + 2):
+    for j in range(col - 1, col + 2):
+        if (i, j) != (row, col):
+            print(f"Neighbor ({i},{j}) =", img[i, j])
+
+
+# =============================================================================
+# 5. Read an image and separate it into RGB components.
+#    Convert RGB image to CMY and HSI color models.
+# =============================================================================
+img = cv2.imread("sample.jpg")
+
+rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+R = rgb[:, :, 0]
+G = rgb[:, :, 1]
+B = rgb[:, :, 2]
+
+# RGB to CMY
+C = 255 - R
+M = 255 - G
+Y = 255 - B
+
+# RGB to HSI (HSV used in OpenCV)
+hsi = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+H = hsi[:, :, 0]
+S = hsi[:, :, 1]
+I = hsi[:, :, 2]
+
+plt.figure(figsize=(12, 10))
+
+plt.subplot(3, 3, 1)
+plt.imshow(rgb)
+plt.title("Original RGB")
+plt.axis("off")
+
+plt.subplot(3, 3, 2)
+plt.imshow(R, cmap="gray")
+plt.title("Red")
+plt.axis("off")
+
+plt.subplot(3, 3, 3)
+plt.imshow(G, cmap="gray")
+plt.title("Green")
+plt.axis("off")
+
+plt.subplot(3, 3, 4)
+plt.imshow(B, cmap="gray")
+plt.title("Blue")
+plt.axis("off")
+
+plt.subplot(3, 3, 5)
+plt.imshow(C, cmap="gray")
+plt.title("Cyan")
+plt.axis("off")
+
+plt.subplot(3, 3, 6)
+plt.imshow(M, cmap="gray")
+plt.title("Magenta")
+plt.axis("off")
+
+plt.subplot(3, 3, 7)
+plt.imshow(Y, cmap="gray")
+plt.title("Yellow")
+plt.axis("off")
+
+plt.subplot(3, 3, 8)
+plt.imshow(H, cmap="gray")
+plt.title("Hue")
+plt.axis("off")
+
+plt.subplot(3, 3, 9)
+plt.imshow(S, cmap="gray")
+plt.title("Saturation")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 6. Modify hue, saturation, and intensity and display the output.
+# =============================================================================
+img = cv2.imread("sample1.jpeg")
+
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+hsv[:, :, 0] = (hsv[:, :, 0] + 20) % 180                 # Hue
+hsv[:, :, 1] = np.clip(hsv[:, :, 1] + 50, 0, 255)        # Saturation
+hsv[:, :, 2] = np.clip(hsv[:, :, 2] + 40, 0, 255)        # Intensity (Value)
+
+output = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+output_rgb = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(output_rgb)
+plt.title("Modified HSV Image")
+plt.axis("off")
+
+plt.show()
+
+
+# =============================================================================
+# 7. Plot color histograms for each channel.
+# =============================================================================
+img = cv2.imread("sample1.jpeg")
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+colors = ('r', 'g', 'b')
+for i, color in enumerate(colors):
+    hist = cv2.calcHist([img_rgb], [i], None, [256], [0, 256])
+    plt.plot(hist, color=color)
+
+plt.title("RGB Color Histogram")
+plt.xlabel("Pixel Intensity (0-255)")
+plt.ylabel("Number of Pixels")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 8. Image negative transformation.
+# =============================================================================
+img = cv2.imread("sample2.jpeg")
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+negative = 255 - img_rgb
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(negative)
+plt.title("Negative Image")
+plt.axis("off")
+
+plt.show()
+
+
+# =============================================================================
+# 9. Apply log transformation and analyze contrast enhancement.
+# =============================================================================
+img = cv2.imread("sample2.jpeg", 0)
+
+img_float = img.astype(np.float32)
+
+c = 255 / np.log(1 + np.max(img_float))
+log_img = c * np.log(1 + img_float)
+log_img = np.uint8(log_img)
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(log_img, cmap='gray')
+plt.title("Log Transformed Image")
+plt.axis("off")
+
+plt.show()
+
+
+# =============================================================================
+# 10. Power-law (gamma) transformation for different gamma values.
+#     Formula: s = c * r^gamma   (r normalized to [0, 1], c = 1)
+# =============================================================================
+img = cv2.imread("sample.jpeg")
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+img_norm = img / 255.0
+
+gamma_values = [0.5, 1.0, 2.0]
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 4, 1)
+plt.imshow(img)
+plt.title("Original")
+plt.axis("off")
+
+for i, gamma in enumerate(gamma_values):
+    gamma_img = np.power(img_norm, gamma)     # Output = Input ^ gamma
+    gamma_img = np.uint8(gamma_img * 255)     # Back to 0-255
+
+    plt.subplot(1, 4, i + 2)
+    plt.imshow(gamma_img)
+    plt.title(f"Gamma = {gamma}")
+    plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 11. Perform piecewise linear transformations (contrast stretching, thresholding).
+# =============================================================================
+img = cv2.imread("sample.jpeg", 0)
+
+# Contrast stretching
+contrast = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)
+
+# Thresholding
+threshold_value = 128
+_, threshold = cv2.threshold(img, threshold_value, 255, cv2.THRESH_BINARY)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(contrast, cmap='gray')
+plt.title("Contrast Stretching")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(threshold, cmap='gray')
+plt.title("Thresholding")
+plt.axis("off")
+
+plt.show()
+
+
+# =============================================================================
+# 12. Perform histogram equalization and compare results.
+# =============================================================================
+image = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+
+equalized = cv2.equalizeHist(image)
+
+plt.figure(figsize=(10, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 2)
+plt.imshow(equalized, cmap="gray")
+plt.title("Equalized Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 3)
+plt.hist(image.ravel(), 256, [0, 256])
+plt.title("Original Histogram")
+
+plt.subplot(2, 2, 4)
+plt.hist(equalized.ravel(), 256, [0, 256])
+plt.title("Equalized Histogram")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 13. Implement histogram stretching.
+# =============================================================================
+image = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+
+min_val = image.min()
+max_val = image.max()
+stretched = ((image - min_val) / (max_val - min_val) * 255).astype("uint8")
+
+plt.figure(figsize=(10, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 2)
+plt.imshow(stretched, cmap="gray")
+plt.title("Stretched Image")
+plt.axis("off")
+
+plt.subplot(2, 2, 3)
+plt.hist(image.ravel(), 256, [0, 256])
+plt.title("Original Histogram")
+
+plt.subplot(2, 2, 4)
+plt.hist(stretched.ravel(), 256, [0, 256])
+plt.title("Stretched Histogram")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 14. Apply histogram matching (specification) with a reference image.
+# =============================================================================
+from skimage.exposure import match_histograms
+
+source = cv2.imread("image.jpeg", cv2.IMREAD_GRAYSCALE)
+reference = cv2.imread("image1.jpg", cv2.IMREAD_GRAYSCALE)
+
+matched = match_histograms(source, reference)
+matched = matched.astype("uint8")
+
+plt.figure(figsize=(12, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(source, cmap="gray")
+plt.title("Source Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(reference, cmap="gray")
+plt.title("Reference Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(matched, cmap="gray")
+plt.title("Matched Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.hist(source.ravel(), 256, [0, 256])
+plt.title("Source Histogram")
+
+plt.subplot(2, 3, 5)
+plt.hist(reference.ravel(), 256, [0, 256])
+plt.title("Reference Histogram")
+
+plt.subplot(2, 3, 6)
+plt.hist(matched.ravel(), 256, [0, 256])
+plt.title("Matched Histogram")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 15. Perform spatial correlation and convolution using custom kernels.
+# =============================================================================
+image = cv2.imread("image.jpeg", 0)
+
+kernel = np.array([
+    [1, 2, 1],
+    [0, 0, 0],
+    [-1, -2, -1]
+], dtype=np.float32)
+
+# Spatial correlation
+correlation = cv2.filter2D(image, -1, kernel)
+
+# Spatial convolution (kernel flipped 180 degrees)
+flipped_kernel = cv2.flip(kernel, -1)
+convolution = cv2.filter2D(image, -1, flipped_kernel)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(correlation, cmap="gray")
+plt.title("Spatial Correlation")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(convolution, cmap="gray")
+plt.title("Spatial Convolution")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 16. Apply smoothing filters (mean, Gaussian).
+# =============================================================================
+image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+mean_filtered = cv2.blur(image_rgb, (5, 5))
+gaussian_filtered = cv2.GaussianBlur(image_rgb, (5, 5), 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(mean_filtered)
+plt.title("Mean Filter")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(gaussian_filtered)
+plt.title("Gaussian Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 17. Sharpening filters using Laplacian.
+# =============================================================================
+image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+laplacian = cv2.Laplacian(gray, cv2.CV_64F)
+laplacian = cv2.convertScaleAbs(laplacian)
+
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(gray, cmap="gray")
+plt.title("Grayscale Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(laplacian, cmap="gray")
+plt.title("Laplacian Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 18. Perform unsharp masking and high-boost filtering.
+# =============================================================================
+image = cv2.imread("sample.jpeg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Unsharp masking
+blur = cv2.GaussianBlur(image_rgb, (5, 5), 0)
+unsharp = cv2.addWeighted(image_rgb, 1.5, blur, -0.5, 0)
+
+# High-boost filtering
+A = 2.0  # Boost factor (A > 1)
+high_boost = cv2.addWeighted(image_rgb, A, blur, -(A - 1), 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image_rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(unsharp)
+plt.title("Unsharp Masking")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(high_boost)
+plt.title("High-Boost Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 19. Apply gradient operators (Sobel, Prewitt) for edge detection.
+# =============================================================================
+image = cv2.imread("sample.jpeg")
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Sobel
+sobel_x = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
+sobel_y = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=3)
+sobel = cv2.magnitude(sobel_x, sobel_y)
+sobel = cv2.convertScaleAbs(sobel)
+
+# Prewitt
+kernel_x = np.array([[-1, 0, 1],
+                     [-1, 0, 1],
+                     [-1, 0, 1]])
+
+kernel_y = np.array([[-1, -1, -1],
+                     [ 0,  0,  0],
+                     [ 1,  1,  1]])
+
+prewitt_x = cv2.filter2D(gray, -1, kernel_x)
+prewitt_y = cv2.filter2D(gray, -1, kernel_y)
+prewitt = cv2.addWeighted(prewitt_x, 0.5, prewitt_y, 0.5, 0)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(gray, cmap='gray')
+plt.title("Original")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(sobel, cmap='gray')
+plt.title("Sobel")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(prewitt, cmap='gray')
+plt.title("Prewitt")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 20. Compute and visualize the 2D Fourier Transform of an image.
+#     Implement inverse DFT and reconstruct the image.
+# =============================================================================
+image = cv2.imread("sample.jpeg", 0)
+
+dft = cv2.dft(np.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
+dft_shift = np.fft.fftshift(dft)
+
+magnitude = cv2.magnitude(dft_shift[:, :, 0], dft_shift[:, :, 1])
+magnitude_spectrum = 20 * np.log(magnitude + 1)
+
+# Inverse DFT
+dft_ishift = np.fft.ifftshift(dft_shift)
+reconstructed = cv2.idft(dft_ishift)
+reconstructed = cv2.magnitude(reconstructed[:, :, 0], reconstructed[:, :, 1])
+reconstructed = cv2.normalize(reconstructed, None, 0, 255, cv2.NORM_MINMAX)
+reconstructed = np.uint8(reconstructed)
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(magnitude_spectrum, cmap="gray")
+plt.title("Fourier Spectrum")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(reconstructed, cmap="gray")
+plt.title("Reconstructed Image")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 21. Apply low-pass and high-pass filters in frequency domain.
+# =============================================================================
+img = cv2.imread("sample.jpg", 0)
+
+f = np.fft.fft2(img)
+fshift = np.fft.fftshift(f)
+
+rows, cols = img.shape
+crow, ccol = rows // 2, cols // 2
+
+mask_low = np.zeros((rows, cols), np.uint8)
+mask_high = np.ones((rows, cols), np.uint8)
+
+r = 30  # Radius
+
+Y, X = np.ogrid[:rows, :cols]
+distance = (X - ccol) ** 2 + (Y - crow) ** 2
+
+mask_low[distance <= r ** 2] = 1
+mask_high[distance <= r ** 2] = 0
+
+low_pass = fshift * mask_low
+high_pass = fshift * mask_high
+
+low_img = np.abs(np.fft.ifft2(np.fft.ifftshift(low_pass)))
+high_img = np.abs(np.fft.ifft2(np.fft.ifftshift(high_pass)))
+
+plt.figure(figsize=(15, 5))
+
+plt.subplot(1, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 3, 2)
+plt.imshow(low_img, cmap='gray')
+plt.title("Low-Pass Filter")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(high_img, cmap='gray')
+plt.title("High-Pass Filter")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 22. Demonstrate properties of DFT (translation, scaling).
+# =============================================================================
+img = cv2.imread("sample.jpg", 0)
+rows, cols = img.shape
+
+# Translation
+M = np.float32([[1, 0, 50],
+                [0, 1, 30]])
+translated = cv2.warpAffine(img, M, (cols, rows))
+
+# Scaling
+scaled = cv2.resize(img, None, fx=1.5, fy=1.5)
+
+
+def magnitude_spectrum_log(image):
+    dft = np.fft.fft2(image)
+    dft_shift = np.fft.fftshift(dft)
+    return np.log(np.abs(dft_shift) + 1)
+
+
+original_spectrum = magnitude_spectrum_log(img)
+translated_spectrum = magnitude_spectrum_log(translated)
+scaled_spectrum = magnitude_spectrum_log(scaled)
+
+plt.figure(figsize=(15, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(translated, cmap='gray')
+plt.title("Translated Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(scaled, cmap='gray')
+plt.title("Scaled Image")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.imshow(original_spectrum, cmap='gray')
+plt.title("Original DFT")
+plt.axis("off")
+
+plt.subplot(2, 3, 5)
+plt.imshow(translated_spectrum, cmap='gray')
+plt.title("Translated DFT")
+plt.axis("off")
+
+plt.subplot(2, 3, 6)
+plt.imshow(scaled_spectrum, cmap='gray')
+plt.title("Scaled DFT")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 23. Perform basic morphological operations: dilation and erosion. Use
+#     different structuring elements and analyze effects. Opening and closing.
+# =============================================================================
+img = cv2.imread("sample.jpeg", 0)
+
+_, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+
+rect = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+ellipse = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+cross = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
+
+dilation = cv2.dilate(binary, rect, iterations=1)
+erosion = cv2.erode(binary, rect, iterations=1)
+opening = cv2.morphologyEx(binary, cv2.MORPH_OPEN, ellipse)
+closing = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, cross)
+
+plt.figure(figsize=(15, 8))
+
+plt.subplot(2, 3, 1)
+plt.imshow(binary, cmap='gray')
+plt.title("Original Binary")
+plt.axis("off")
+
+plt.subplot(2, 3, 2)
+plt.imshow(dilation, cmap='gray')
+plt.title("Dilation")
+plt.axis("off")
+
+plt.subplot(2, 3, 3)
+plt.imshow(erosion, cmap='gray')
+plt.title("Erosion")
+plt.axis("off")
+
+plt.subplot(2, 3, 4)
+plt.imshow(opening, cmap='gray')
+plt.title("Opening")
+plt.axis("off")
+
+plt.subplot(2, 3, 5)
+plt.imshow(closing, cmap='gray')
+plt.title("Closing")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 24. Hit-or-miss transformation for pattern detection.
+# =============================================================================
+img = cv2.imread("sample.jpeg", 0)
+
+_, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+binary = binary // 255
+
+kernel = np.array([[0, 1, 0],
+                   [1, 1, 1],
+                   [0, 1, 0]], dtype=np.int8)
+
+hitmiss = cv2.morphologyEx(binary.astype(np.uint8), cv2.MORPH_HITMISS, kernel)
+
+binary = binary * 255
+hitmiss = hitmiss * 255
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(binary, cmap='gray')
+plt.title("Binary Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(hitmiss, cmap='gray')
+plt.title("Hit-or-Miss Output")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+
+
+# =============================================================================
+# 25. Add different types of noise: Gaussian, Salt & Pepper (Impulse),
+#     Rayleigh / Gamma / Exponential. Apply mean filters and analyze results.
+# =============================================================================
+img = cv2.imread("sample.jpeg", 0)
+img_float = img.astype(np.float32) / 255.0
+
+# Gaussian noise
+gaussian = img_float + np.random.normal(0, 0.1, img_float.shape)
+gaussian = np.clip(gaussian, 0, 1)
+
+# Salt & pepper noise
+sp = img_float.copy()
+salt_prob = 0.02
+pepper_prob = 0.02
+salt = np.random.rand(*img.shape) < salt_prob
+pepper = np.random.rand(*img.shape) < pepper_prob
+sp[salt] = 1
+sp[pepper] = 0
+
+# Rayleigh noise
+rayleigh = img_float + np.random.rayleigh(0.1, img.shape)
+rayleigh = np.clip(rayleigh, 0, 1)
+
+# Gamma noise
+gamma = img_float + np.random.gamma(2, 0.05, img.shape)
+gamma = np.clip(gamma, 0, 1)
+
+# Exponential noise
+expo = img_float + np.random.exponential(0.05, img.shape)
+expo = np.clip(expo, 0, 1)
+
+
+def mean_filter(image):
+    image = np.uint8(image * 255)
+    return cv2.blur(image, (3, 3))
+
+
+gaussian_f = mean_filter(gaussian)
+sp_f = mean_filter(sp)
+rayleigh_f = mean_filter(rayleigh)
+gamma_f = mean_filter(gamma)
+expo_f = mean_filter(expo)
+
+titles = [
+    "Original",
+    "Gaussian", "Gaussian + Mean",
+    "Salt & Pepper", "S&P + Mean",
+    "Rayleigh", "Rayleigh + Mean",
+    "Gamma", "Gamma + Mean",
+    "Exponential", "Exponential + Mean"
+]
+
+images = [
+    img,
+    np.uint8(gaussian * 255), gaussian_f,
+    np.uint8(sp * 255), sp_f,
+    np.uint8(rayleigh * 255), rayleigh_f,
+    np.uint8(gamma * 255), gamma_f,
+    np.uint8(expo * 255), expo_f
+]
+
+plt.figure(figsize=(15, 12))
+
+for i in range(len(images)):
+    plt.subplot(4, 3, i + 1)
+    plt.imshow(images[i], cmap='gray')
+    plt.title(titles[i])
+    plt.axis("off")
+
+plt.tight_layout()
+plt.show()
+`;
+
+
+// ── Syntax Highlighter ────────────────────────────────────────────────────────
+const KW = new Set(['False','None','True','and','as','assert','async','await',
+  'break','class','continue','def','del','elif','else','except','finally','for',
+  'from','global','if','import','in','is','lambda','nonlocal','not','or','pass',
+  'raise','return','try','while','with','yield']);
+const BI = new Set(['abs','all','any','bin','bool','bytes','callable','chr',
+  'dict','dir','divmod','enumerate','eval','filter','float','format','frozenset',
+  'getattr','globals','hasattr','hash','help','hex','id','input','int',
+  'isinstance','issubclass','iter','len','list','locals','map','max',
+  'memoryview','min','next','object','oct','open','ord','pow','print',
+  'property','range','repr','reversed','round','set','setattr','slice',
+  'sorted','staticmethod','str','sum','super','tuple','type','vars','zip']);
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function findCmt(line){
+  let inS=false,sc='';
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(inS){if(c==='\\'){i++;continue;}if(c===sc)inS=false;}
+    else{if(c==='"'||c==="'"){inS=true;sc=c;}else if(c==='#')return i;}
+  }
+  return -1;
+}
+
+function tok(code){
+  let out='',i=0;
+  while(i<code.length){
+    // Triple-quoted string
+    if((code[i]==='"'||code[i]==="'")&&code.slice(i,i+3)===code[i].repeat(3)){
+      const q=code[i].repeat(3);let e=code.indexOf(q,i+3);
+      if(e<0)e=code.length-3;
+      out+=`<span class="dc">${esc(code.slice(i,e+3))}</span>`;i=e+3;continue;
+    }
+    // Single-quoted string
+    if(code[i]==='"'||code[i]==="'"){
+      const q=code[i];let j=i+1;
+      while(j<code.length){if(code[j]==='\\'){j+=2;continue;}if(code[j]===q){j++;break;}j++;}
+      out+=`<span class="st">${esc(code.slice(i,j))}</span>`;i=j;continue;
+    }
+    // Numbers
+    if(/[0-9]/.test(code[i])||(code[i]==='.'&&/[0-9]/.test(code[i+1]||''))){
+      let j=i;while(j<code.length&&/[\d.eE+\-_xXbBoOaAbBcCdDfF]/.test(code[j]))j++;
+      out+=`<span class="nu">${esc(code.slice(i,j))}</span>`;i=j;continue;
+    }
+    // Identifiers
+    if(/[a-zA-Z_]/.test(code[i])){
+      let j=i;while(j<code.length&&/\w/.test(code[j]))j++;
+      const w=code.slice(i,j),nx=code[j];
+      if(KW.has(w))out+=`<span class="kw">${esc(w)}</span>`;
+      else if(BI.has(w))out+=`<span class="bi">${esc(w)}</span>`;
+      else if(nx==='(')out+=`<span class="fn">${esc(w)}</span>`;
+      else out+=esc(w);
+      i=j;continue;
+    }
+    // Operators
+    if(/[+\-*/%.=!<>&|^~@]/.test(code[i])){
+      let j=i;while(j<code.length&&/[+\-*/%.=!<>&|^~@]/.test(code[j]))j++;
+      out+=`<span class="op">${esc(code.slice(i,j))}</span>`;i=j;continue;
+    }
+    out+=esc(code[i]);i++;
+  }
+  return out;
+}
+
+function hlLine(line){
+  const ci=findCmt(line),code=ci>=0?line.slice(0,ci):line,cmt=ci>=0?line.slice(ci):'';
+  return tok(code)+(cmt?`<span class="cm">${esc(cmt)}</span>`:'');
+}
+
+function codeTable(src,pfx){
+  const ls=src.split('\n');
+  return '<table class="code-table">'+ls.map((l,i)=>{
+    const n=i+1;
+    return `<tr><td class="ln" id="${pfx}-L${n}">${n}</td><td class="lc">${hlLine(l)}</td></tr>`;
+  }).join('')+'</table>';
+}
+
+// ── Clipboard ─────────────────────────────────────────────────────────────────
+function copyCode(btn,code){
+  const ok=()=>{
+    btn.textContent='✓ Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='⎘ Copy';btn.classList.remove('copied');},2000);
+  };
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(code).then(ok).catch(()=>fbCopy(code,ok));}
+  else fbCopy(code,ok);
+}
+function fbCopy(code,cb){
+  const ta=document.createElement('textarea');ta.value=code;
+  ta.style.cssText='position:fixed;opacity:0;pointer-events:none;';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');cb();}catch(e){alert('Copy failed — please select and copy manually.');}
+  document.body.removeChild(ta);
+}
+
+// ── Download ──────────────────────────────────────────────────────────────────
+function dlFile(fn,content){
+  const b=new Blob([content],{type:'text/x-python'});
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download=fn;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(u);document.body.removeChild(a);},1000);
+}
+
+// ── Render sections ───────────────────────────────────────────────────────────
+function renderSection(p,codeData){
+  const ns=String(p.id).padStart(2,'0');
+  const div=document.createElement('section');
+  div.className='program-section';div.id=`prog-${p.id}`;
+  div.setAttribute('aria-label',`Program ${p.id}`);
+  div.innerHTML=`
+    <div class="section-header">
+      <span class="section-num">PROG ${ns}</span>
+      <span class="section-title">Program ${p.id} — ${esc(p.q)}</span>
+    </div>
+    <div class="section-body">
+      <div class="code-panel"><div class="code-scroll">${codeTable(p.code,'p'+p.id)}</div></div>
+      <div class="info-panel">
+        <div class="question-box">
+          <div class="question-label">Question</div>
+          <div class="question-text">${esc(p.q)}</div>
+        </div>
+        <div class="file-info"><span>📄</span><span>${esc(p.fn)}</span></div>
+        <div class="btn-group">
+          <button class="btn btn-copy" id="cb-${p.id}" onclick="copyCode(this,PROGS[${p.id-1}].code)">⎘ Copy</button>
+          <button class="btn btn-download" onclick="dlFile('${p.fn}',PROGS[${p.id-1}].code)">⬇ Download</button>
+        </div>
+      </div>
+    </div>`;
+  return div;
+}
+function renderFull(fullCode){
+  const div=document.createElement('section');
+  div.className='program-section full-section';div.id='prog-full';
+  div.innerHTML=`
+    <div class="section-header">
+      <span class="section-num" style="background:linear-gradient(135deg,var(--accent2),#3ab5a8)">FULL FILE</span>
+      <span class="section-title">digi_lab.py — Complete File (all 25 programs)</span>
+    </div>
+    <div class="section-body">
+      <div class="code-panel"><div class="code-scroll">${codeTable(fullCode,'full')}</div></div>
+      <div class="info-panel">
+        <div class="question-box" style="border-left-color:var(--accent)">
+          <div class="question-label" style="color:var(--accent)">About</div>
+          <div class="question-text">Complete <strong>digi_lab.py</strong> — all 25 programs in one file.<br><br>
+          Required images in same folder:<br>
+          <code style="font-family:monospace;font-size:.82em;color:#5fdf9a">sample.jpeg, sample.jpg, sample1.jpeg,<br>sample2.jpeg, image.jpeg, image1.jpg</code></div>
+        </div>
+        <div class="file-info"><span>📄</span><span>digi_lab.py</span></div>
+        <div class="btn-group">
+          <button class="btn btn-copy" id="cb-full" onclick="copyCode(this,FULL)">⎘ Copy All</button>
+          <button class="btn btn-download" onclick="dlFile('digi_lab.py',FULL)">⬇ Download digi_lab.py</button>
+        </div>
+      </div>
+    </div>`;
+  return div;
+}
+
+// ── Scroll Spy ────────────────────────────────────────────────────────────────
+function initScrollSpy(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const s=e.target.id.replace('prog-','');
+        document.querySelectorAll('.toc-list a').forEach(a=>
+          a.classList.toggle('active',a.id===`toc-${s}`));
+      }
+    });
+  },{rootMargin:'-60px 0px -60% 0px',threshold:0});
+  document.querySelectorAll('.program-section').forEach(s=>obs.observe(s));
+}
+
+function toggleToc(){document.getElementById('tocSidebar').classList.toggle('open');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const c=document.getElementById('programs-container');
+  PROGS.forEach(p=>c.appendChild(renderSection(p)));
+  c.appendChild(renderFull(FULL));
+  initScrollSpy();
+  document.querySelectorAll('.toc-list a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('tocSidebar').classList.remove('open'));
+  });
+});
+
+</script>
+</body>
+</html>
