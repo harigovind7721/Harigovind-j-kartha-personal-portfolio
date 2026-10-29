@@ -135,6 +135,8 @@
   <nav class="toc-sidebar" id="tocSidebar" aria-label="Table of contents">
     <div class="toc-title">Table of Contents</div>
     <ul class="toc-list">
+      <li><a href="#prog-full" id="toc-full"><span class="toc-num" style="color:var(--accent2)">★</span>Full file (digi_lab.py)</a></li>
+      <hr class="toc-divider" />
       <li><a href="#prog-1" id="toc-1"><span class="toc-num">01</span>1. Load a grayscale and color image an...</a></li>
       <li><a href="#prog-2" id="toc-2"><span class="toc-num">02</span>2. Simulate image sampling and quantiz...</a></li>
       <li><a href="#prog-3" id="toc-3"><span class="toc-num">03</span>3. Demonstrate spatial and intensity r...</a></li>
@@ -160,8 +162,6 @@
       <li><a href="#prog-23" id="toc-23"><span class="toc-num">23</span>23. Perform basic morphological operat...</a></li>
       <li><a href="#prog-24" id="toc-24"><span class="toc-num">24</span>24. Hit-or-miss transformation for pat...</a></li>
       <li><a href="#prog-25" id="toc-25"><span class="toc-num">25</span>25. Add different types of noise: Gaus...</a></li>
-      <hr class="toc-divider" />
-      <li><a href="#prog-full" id="toc-full"><span class="toc-num" style="color:var(--accent2)">★</span>Full file (digi_lab.py)</a></li>
     </ul>
   </nav>
 
@@ -2182,8 +2182,8 @@ function toggleToc(){document.getElementById('tocSidebar').classList.toggle('ope
 
 document.addEventListener('DOMContentLoaded',()=>{
   const c=document.getElementById('programs-container');
-  PROGS.forEach(p=>c.appendChild(renderSection(p)));
   c.appendChild(renderFull(FULL));
+  PROGS.forEach(p=>c.appendChild(renderSection(p)));
   initScrollSpy();
   document.querySelectorAll('.toc-list a').forEach(a=>{
     a.addEventListener('click',()=>document.getElementById('tocSidebar').classList.remove('open'));
